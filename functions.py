@@ -23,3 +23,14 @@ def get_hash():
 
 
 # print(get_hash())
+
+
+def get_posts_by_tag(tag):
+    results = []
+    posts = read_json()
+    for post in posts:
+        if f'#{tag}' in post['content']:
+            results.append(post)
+    return results
+
+# print(get_posts_by_tag('пирог'))
