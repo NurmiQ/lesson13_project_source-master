@@ -9,7 +9,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def page_index():
-    return render_template('index.html', tags=get_hash())
+    data = read_json(POST_PATH)
+    return render_template('index.html', tags=get_hash(data))
 
 
 @app.route("/tag")
@@ -17,8 +18,8 @@ def page_tag():
     tag = request.args.get("tag")
     if not tag:
         abort(400)
-    data = read_json()
-    posts = get_posts_by_tag(tag)
+    data = read_json(POST_PATH)
+    posts = get_posts_by_tag(data, tag)
     return render_template('post_by_tag.html', tag=tag, posts=posts)
 
 
@@ -34,10 +35,10 @@ def page_post_create():
     path = f'{UPLOAD_FOLDER}/{picture.filename}'
     post = {
             'content': content,
-            'pic': f'/{path}',
+            'pic': f'/uploads/images/{picture.filename}',
            }
     picture.save(path)
-    add_post(POST_PATH, post)
+    add_post(POSTPOST_PATH, post)
     return render_template('post_uploaded.html', post=post)
 
 

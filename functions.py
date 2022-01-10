@@ -1,19 +1,17 @@
 import json
 
 
-def read_json():
+def read_json(filename):
     with open('posts.json', 'r', encoding='utf-8') as file:
-        posts = json.load(file)
-        return posts
+        return json.load(file)
 
 
 # print(read_json())
 
 
-def get_hash():
+def get_hash(data):
     match_hash = []
-    g_hash = read_json()
-    for tag in g_hash:
+    for tag in data:
         content = tag['content']
         words = content.split()
         for word in words:
@@ -25,13 +23,13 @@ def get_hash():
 # print(get_hash())
 
 
-def get_posts_by_tag(tag):
+def get_posts_by_tag(data, tag):
     results = []
-    posts = read_json()
-    for post in posts:
+    for post in data:
         if f'#{tag}' in post['content']:
             results.append(post)
     return results
+
 
 # print(get_posts_by_tag('пирог'))
 
@@ -41,5 +39,3 @@ def add_post(filename, post):
     posts.append(post)
     with open(filename, 'w', encoding='utf-8') as file:
         json.dump(posts, file, ensure_ascii=False, indent=4, sort_keys=True)
-
-
