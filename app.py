@@ -38,7 +38,7 @@ def page_post_create():
             'pic': f'/uploads/images/{picture.filename}',
            }
     picture.save(path)
-    add_post(POSTPOST_PATH, post)
+    add_post(POST_PATH, post)
     return render_template('post_uploaded.html', post=post)
 
 
